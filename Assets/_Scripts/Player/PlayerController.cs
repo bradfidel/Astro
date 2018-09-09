@@ -23,8 +23,12 @@ public class PlayerController : MonoBehaviour
 
     private float currentSpeed = 0;
 
+    [SerializeField]
+    private CameraController cameraController = null;
+
     private void Update()
     {
+        DebugUI.instance.DisplayValue("FPS: " + (int)(1 / Time.deltaTime));
         DebugUI.instance.DisplayValue("SPD: " + ((int)currentSpeed).ToString());
         DebugUI.instance.DisplayValue("AngularVelo: " + rigidbody.angularVelocity);
     }
@@ -52,5 +56,6 @@ public class PlayerController : MonoBehaviour
         {
             currentSpeed *= currentSpeed / (currentSpeed + collision.impulse.magnitude);
         }
+        cameraController.ShakeAfterImpulse(collision.impulse);
     }
 }
