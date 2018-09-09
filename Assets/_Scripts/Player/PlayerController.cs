@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         DebugUI.instance.DisplayValue("SPD: " + ((int)currentSpeed).ToString());
+        DebugUI.instance.DisplayValue("AngularVelo: " + rigidbody.angularVelocity);
     }
 
     private void FixedUpdate()
@@ -37,6 +38,19 @@ public class PlayerController : MonoBehaviour
         float velocityChange = config.velocityAcceleration * (inputController.rightTrigger - inputController.leftTrigger) * Time.fixedDeltaTime;
         currentSpeed = Mathf.Clamp(currentSpeed + velocityChange, 0, config.maxVelocity);
 
-        rigidbody.velocity = transform.forward * Time.deltaTime * currentSpeed;
+        rigidbody.velocity = transform.forward * currentSpeed;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        SlowDownUponCollision(collision);
+    }
+
+    private void SlowDownUponCollision(Collision collision)
+    {
+        if (currentSpeed > 0)
+        {
+            currentSpeed *= currentSpeed / (currentSpeed + collision.impulse.magnitude);
+        }
     }
 }
