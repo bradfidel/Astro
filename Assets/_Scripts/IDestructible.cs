@@ -1,4 +1,4 @@
 ﻿public interface IDestructible
 {
-    void DealDamage(float amount);
+    void ReceiveDamage(float amount);
 }

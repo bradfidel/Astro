@@ -20,6 +20,6 @@ public class LaserWeapon : MonoBehaviour, IWeapon
     public void Shoot()
     {
         weaponCooldown = Time.time + 1f / fireRate;
-        Rigidbody projectile = Instantiate(laserProjectilePrefab, transform.position + transform.forward, transform.rotation).GetComponent<Rigidbody>();
+        Instantiate(laserProjectilePrefab, transform.position + transform.forward, transform.rotation);
     }
 }
